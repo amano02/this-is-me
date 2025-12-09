@@ -223,3 +223,22 @@ bar.animate(1.0, function () {//バーを描画する割合を指定します 1.
     });//=====ここまでプログレスバー表示
     
 });// ここまでページが読み込まれたらすぐに動かしたい場合の記述
+
+/* ▼▼▼ 詳細画面（2段階目のモーダル）の設定 ▼▼▼ */
+$(".detail-open").modaal({
+	type: 'inline',        // HTMLの中身を表示するモード
+	overlay_opacity: 0.8,  // 背景の暗さ
+	background: 'transparent', // 枠自体の背景は透明にしてCSSで制御
+	
+	// 開く瞬間の処理
+	before_open: function() {
+			// 【重要】詳細画面が一覧画面の「裏」に行かないように、重なり順を最強にする
+			// 少し遅らせて設定することで確実に適用させます
+			setTimeout(function(){
+					// 最後に開かれたモーダルの枠（詳細画面）のz-indexを非常に大きくする
+					$('.modaal-wrapper').last().css('z-index', '99999');
+					// その背景（オーバーレイ）も同様に大きくする
+					$('.modaal-overlay').last().css('z-index', '99998');
+			}, 100);
+	}
+});

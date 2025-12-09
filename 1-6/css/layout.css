@@ -248,3 +248,57 @@ small{
     -webkit-writing-mode: vertical-rl;
     writing-mode: vertical-rl;
 }
+/* ▼▼▼ 詳細モーダル用のスタイル ▼▼▼ */
+
+/* 全体の枠（フレックスボックスで横並びにする） */
+.detail-container {
+    display: flex;
+    gap: 40px;           /* 画像と文章の間隔 */
+    padding: 20px;
+    max-width: 900px;    /* 画面幅の制限 */
+    background: #fff;    /* 背景色 */
+}
+
+/* 画像エリア */
+.detail-img {
+    flex: 1;             /* 幅の比率 */
+    min-width: 0;        /* はみ出し防止 */
+}
+.detail-img img {
+    width: 100%;         /* 親要素に合わせて伸縮 */
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+/* 文章エリア */
+.detail-text {
+    flex: 1;             /* 幅の比率（1:1で分割） */
+    text-align: left;    /* 左揃え */
+    color: #333;         /* 文字色 */
+}
+
+/* 見出し */
+.detail-text h3 {
+    font-size: 24px;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 10px;
+    color: #333;
+    font-family: sans-serif; /* 読みやすいフォントに */
+}
+
+/* サブ情報 */
+.detail-meta {
+    font-size: 14px;
+    color: #888;
+    margin-bottom: 20px;
+}
+
+/* スマホ対応（画面が狭いときは縦並びにする） */
+@media screen and (max-width: 768px) {
+    .detail-container {
+        flex-direction: column; /* 縦並び */
+        gap: 20px;
+    }
+}
