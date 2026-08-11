@@ -1,0 +1,13 @@
+.DS_Store
+.vscode/
+
+# Django backend (local dev artifacts)
+backend/venv/
+backend/.env
+backend/media/
+backend/staticfiles/
+backend/pgdata/
+backend/pgdata_logfile.log
+backend/db.sqlite3
+**/__pycache__/
+*.pyc
