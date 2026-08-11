@@ -1,0 +1,24 @@
+2026-08-11 07:25:04.246 JST [97147] LOG:  starting PostgreSQL 15.17 on x86_64-apple-darwin24.6.0, compiled by Apple clang version 17.0.0 (clang-1700.6.3.2), 64-bit
+2026-08-11 07:25:04.248 JST [97147] LOG:  listening on IPv6 address "::1", port 5433
+2026-08-11 07:25:04.248 JST [97147] LOG:  listening on IPv4 address "127.0.0.1", port 5433
+2026-08-11 07:25:04.248 JST [97147] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5433"
+2026-08-11 07:25:04.250 JST [97150] LOG:  database system was shut down at 2026-08-11 07:24:58 JST
+2026-08-11 07:25:04.253 JST [97147] LOG:  database system is ready to accept connections
+2026-08-11 07:25:06.356 JST [97157] FATAL:  role "amanohiroka" does not exist
+2026-08-11 07:30:04.097 JST [97148] LOG:  checkpoint starting: time
+2026-08-11 07:31:59.507 JST [97148] LOG:  checkpoint complete: wrote 1140 buffers (7.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=115.399 s, sync=0.009 s, total=115.411 s; sync files=443, longest=0.001 s, average=0.001 s; distance=5218 kB, estimate=5218 kB
+2026-08-11 07:34:34.365 JST [97865] FATAL:  lock file "postmaster.pid" already exists
+2026-08-11 07:34:34.365 JST [97865] HINT:  Is another postmaster (PID 97147) running in data directory "/Users/amanohiroka/Documents/this-is-me-main/backend/pgdata"?
+2026-08-11 07:34:45.750 JST [97914] FATAL:  role "amanohiroka" does not exist
+2026-08-11 07:38:49.351 JST [98927] FATAL:  role "amanohiroka" does not exist
+2026-08-11 07:40:04.527 JST [97148] LOG:  checkpoint starting: time
+2026-08-11 07:40:09.922 JST [97148] LOG:  checkpoint complete: wrote 55 buffers (0.3%); 0 WAL file(s) added, 0 removed, 0 recycled; write=5.389 s, sync=0.004 s, total=5.396 s; sync files=44, longest=0.001 s, average=0.001 s; distance=43 kB, estimate=4701 kB
+2026-08-11 07:44:18.022 JST [3813] FATAL:  lock file "postmaster.pid" already exists
+2026-08-11 07:44:18.022 JST [3813] HINT:  Is another postmaster (PID 97147) running in data directory "/Users/amanohiroka/Documents/this-is-me-main/backend/pgdata"?
+2026-08-11 07:44:38.119 JST [4117] FATAL:  role "amanohiroka" does not exist
+2026-08-11 07:45:07.037 JST [97148] LOG:  checkpoint starting: time
+2026-08-11 07:45:07.145 JST [97148] LOG:  checkpoint complete: wrote 2 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.103 s, sync=0.001 s, total=0.109 s; sync files=2, longest=0.001 s, average=0.001 s; distance=0 kB, estimate=4231 kB
+2026-08-11 10:46:21.210 JST [40809] FATAL:  role "amanohiroka" does not exist
+2026-08-11 10:49:02.423 JST [42909] FATAL:  role "amanohiroka" does not exist
+2026-08-11 11:00:08.024 JST [97148] LOG:  checkpoint starting: time
+2026-08-11 11:00:08.743 JST [97148] LOG:  checkpoint complete: wrote 8 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.714 s, sync=0.002 s, total=0.720 s; sync files=8, longest=0.001 s, average=0.001 s; distance=2 kB, estimate=3808 kB

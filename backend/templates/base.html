@@ -1,0 +1,46 @@
+{% load static %}<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>{% block title %}ポートフォリオサイト{% endblock %}</title>
+<meta name="description" content="{% block description %}アートシンキング授業の課題用のポートフォリオサイトです{% endblock %}">
+<meta name="robots" content="noindex,nofollow">
+<meta name="keywords" content="">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<!--=============Google Font ===============-->
+<link href="https://fonts.googleapis.com/css?family=Baskervville%7CLa+Belle+Aurore&display=swap" rel="stylesheet">
+<!--==============レイアウトを制御する独自のCSSを読み込み===============-->
+<!--機能編 6-1-3 ゆっくりズームアウトさせながら全画面で見せる-->
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/vegas/2.4.4/vegas.min.css">
+<!--機能編 9-6-3 リンクをクリックすると、背景が暗くなり動画や画像やテキストを表示-->
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/Modaal/0.4.4/css/modaal.min.css">
+<!--自作のCSS-->
+<link rel="stylesheet" type="text/css" href="{% static '1-6/css/reset.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static '1-6/css/parts.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static '1-6/css/layout.css' %}">
+{% block extra_head %}{% endblock %}
+</head>
+
+<body>
+{% block body %}{% endblock %}
+
+<!--=============JS ===============-->
+<!--jQuery-->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<!--機能編 4-1-3プログレスバー＋数字カウントアップ＋画面が開く-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/progressbar.js/1.0.1/progressbar.min.js"></script>
+<!--IE11用　不必要なら削除-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.26.0/polyfill.min.js"></script>
+<!--機能編 6-1-3 ゆっくりズームアウトさせながら全画面で見せる-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vegas/2.4.4/vegas.min.js"></script>
+<!--機能編 9-6-3 リンクをクリックすると、背景が暗くなり動画や画像やテキストを表示-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Modaal/0.4.4/js/modaal.min.js"></script>
+<!--印象編　6-1　スクロールすると1画面移動-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/scrollify/1.0.21/jquery.scrollify.min.js"></script>
+<!--自作のJS-->
+<script src="{% static '1-6/js/script.js' %}"></script>
+<script src="{% static '1-6/js/gallery-search.js' %}"></script>
+{% block extra_js %}{% endblock %}
+</body>
+</html>

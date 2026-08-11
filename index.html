@@ -1,0 +1,312 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>ポートフォリオサイト</title>
+<meta name="description"  content="アートシンキング授業の課題用のポートフォリオサイトです">
+<meta name="robots" content="noindex,nofollow"><meta name="keywords"  content="">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<!--=============Google Font ===============-->
+<link href="https://fonts.googleapis.com/css?family=Baskervville%7CLa+Belle+Aurore&display=swap" rel="stylesheet">
+<!--==============レイアウトを制御する独自のCSSを読み込み===============-->
+<!--機能編 6-1-3 ゆっくりズームアウトさせながら全画面で見せる-->
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/vegas/2.4.4/vegas.min.css">
+<!--機能編 9-6-3 リンクをクリックすると、背景が暗くなり動画や画像やテキストを表示-->
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/Modaal/0.4.4/css/modaal.min.css">
+<!--自作のCSS-->
+<link rel="stylesheet" type="text/css" href="1-6/css/reset.css">
+<link rel="stylesheet" type="text/css" href="1-6/css/parts.css">
+<link rel="stylesheet" type="text/css" href="1-6/css/layout.css">
+</head>
+
+<body>
+	<div id="splash">
+		<div id="splash_text"></div>
+		<div class="loader_cover loader_cover-up"></div>
+		<div class="loader_cover loader_cover-down"></div>
+	</div>
+    
+<header id="header">
+<div id="slider"> 
+    <div class="heading-block">
+    <h1 class="blurTrigger">Hiroka Amano</h1>
+    <p class="blurTrigger">multi creator</p>
+    <!--/heading-block--></div>
+    <ul id="sns-icon">
+    <li><a href="#"><img src="1-6/svg/ico_insta.svg" alt="Instagram"></a></li>
+    <li><a href="#"><img src="1-6/svg/ico_fb.svg" alt="Facebook"></a></li>
+    <li><a href="#"><img src="1-6/svg/ico_tw.svg" alt="Twitter"></a></li>
+    </ul>
+<!--/slider--></div>
+</header>
+<main>
+	<section id="box1" class="box" data-section-name="Profile">
+		<div class="box-area">
+            <div class="profile-area blurTrigger">
+            <h2>multi creator <span>Hiroka Amano</span></h2>
+            <p>Birth Place : shizuoka<br>Birthday : 2007.2.27<br>School:ZEN大学、dowango情報工科学院</p>
+            <!-- <dl><dt>Awards</dt>
+                <dd>Camera Award 2020</dd>
+                <dd>Beautiful Photos 2025</dd>
+                <dd>Young Photographer 2025</dd> -->
+            </dl>
+            </div>
+        </div>
+	<!--/box--></section>
+	
+	<section id="box2" class="box" data-section-name="illustlation">
+		<div class="box-area">
+        <h2 class="eachTextAnime">illustlation</h2>
+        <a href="#gallery-1" class="gradient4 btn-view blurTrigger">View works</a>
+        <!--/box-area--></div>
+        <div id="gallery-1" class="hide-area">
+            <a href="#detail-01" class="detail-open">
+                <img src="1-6/img/01.jpg" alt="">
+                <span class="caption">立ち絵１</span>
+            </a>
+            <a href="#detail-02" class="detail-open">
+                <img src="1-6/img/02.jpg" alt="">
+                <span class="caption">アイコン</span>
+            </a>
+            <a href="#detail-03" class="detail-open">
+                <img src="1-6/img/03.jpg" alt="">
+                <span class="caption">水彩画風</span>
+            </a>
+            <a href="#detail-04" class="detail-open">
+                <img src="1-6/img/04.jpg" alt="">
+                <span class="caption">立ち絵２</span>
+            </a>
+            <a href="#detail-06" class="detail-open">
+                <img src="1-6/img/06.jpg" alt="">
+                <span class="caption">一枚絵</span>
+            </a>
+		</div>
+	<!--/box--></section>
+	
+	<section id="box3" class="box" data-section-name="3dcg">
+		<div class="box-area">
+		<h2 class="eachTextAnime">3dcg</h2>
+        <a href="#gallery-2" class="gradient4 btn-view blurTrigger">View Photos</a>
+        <!--/box-area--></div>
+        <div id="gallery-2" class="hide-area">
+            <a href="#detail-07" class="detail-open">
+                <img src="1-6/img/07.jpg" alt="">
+                <span class="caption">パンケーキとミルク</span>
+            </a>
+            <a href="#detail-08" class="detail-open">
+                <img src="1-6/img/08.jpg" alt="">
+                <span class="caption">キャラモデリング練習</span>
+            </a>
+            <a href="#detail-09" class="detail-open">
+                <img src="1-6/img/09.jpg" alt="">
+                <span class="caption">コーヒー</span>
+            </a>
+            <a href="#detail-10" class="detail-open">
+                <img src="1-6/img/10.jpg" alt="">
+                <span class="caption">バレンタイン</span>
+            </a>
+            <a href="#detail-11" class="detail-open">
+                <img src="1-6/img/11.jpg" alt="">
+                <span class="caption">巳年</span>
+            </a>
+            <a href="#detail-12" class="detail-open">
+                <img src="1-6/img/12.jpg" alt="">
+                <span class="caption">リソッド化</span>
+            </a>
+		</div>
+	<!--/box--></section>
+	
+	<section id="box4" class="box" data-section-name="music">
+        <div class="box-area">
+		<h2 class="eachTextAnime">music</h2>
+        <a href="#gallery-3" class="gradient4 btn-view blurTrigger">View Photos</a>
+        <!--/box-area--></div>
+        <div id="gallery-3" class="hide-area">
+            <p>今後記載予定</p>
+		</div>
+	<!--/box--></section>
+
+    <section id="box5" class="box" data-section-name="others">
+        <div class="box-area">
+		<h2 class="eachTextAnime">others</h2>
+        <a href="#gallery-4" class="gradient4 btn-view blurTrigger">View Photos</a>
+        <!--/box-area--></div>
+        <div id="gallery-4" class="hide-area">
+            <p>
+                <a href="#detail-13" class="detail-open">
+                    <img src="1-6/img/13.jpg" alt="">
+                    <span class="caption">名刺１</span>
+                </a>
+            </p>
+            <p>
+                <a href="#detail-14" class="detail-open">
+                    <img src="1-6/img/14.jpg" alt="">
+                    <span class="caption">名刺2</span>
+                </a>
+            </p>
+            <p>
+                <a href="#detail-15" class="detail-open">
+                    <img src="1-6/img/15.jpg" alt="">
+                    <span class="caption">名刺３</span>
+                </a>
+            </p>
+            <p>
+                <a href="#detail-16" class="detail-open">
+                    <img src="1-6/img/16.jpg" alt="">
+                    <span class="caption">名刺4</span>
+                </a>
+            </p>
+            <p>
+                <a href="#detail-17" class="detail-open">
+                    <img src="1-6/img/17.jpg" alt="">
+                    <span class="caption">ポスター１</span>
+                </a>
+            </p>
+            <p>
+                <a href="#detail-18" class="detail-open">
+                    <img src="1-6/img/18.jpg" alt="">
+                    <span class="caption">ポスター２</span>
+                </a>
+            </p>
+            <p>
+                <a href="#detail-19" class="detail-open">
+                    <img src="1-6/img/19.jpg" alt="">
+                    <span class="caption">アプリアイコン</span>
+                </a>
+            </p>
+            <p>
+                <a href="#detail-20" class="detail-open">
+                    <img src="1-6/img/20.jpg" alt="">
+                    <span class="caption">文字デザイン</span>
+                </a>
+            </p>
+            <p>
+                <a href="#detail-21" class="detail-open">
+                    <img src="1-6/img/21.jpg" alt="">
+                    <span class="caption">しおり表紙</span>
+                </a>
+            </p>
+            <p>
+                <a href="#detail-22" class="detail-open">
+                    <img src="1-6/img/22.jpg" alt="">
+                    <span class="caption">グラフィックデザイン</span>
+                </a>
+            </p>
+		</div>
+	<!--/box--></section>
+    
+    <section id="box6" class="box" data-section-name="Contact">
+        <div class="box-area">
+		<h2 class="eachTextAnime">contact</h2>
+        <a href="#form" class="gradient4 btn-view2 blurTrigger">Contact Form</a>
+        <!--/box-area--></div>
+        <section id="form" class="hide-area">
+            <h3>Contact Form</h3>
+        <form method="post" action="" enctype="multipart/form-data">
+        <ul class="form-list">
+        <li>
+        <dl>
+        <dt><label for="name">Name</label></dt>
+        <dd><input type="text" name="Name" id="name" size="60" value="">
+        </dd>
+        </dl>
+        </li>
+        <li>
+        <dl>
+        <dt><label for="email">E-mail</label></dt>
+        <dd><input type="email" name="E-mail" id="email" size="60" value="">
+        </dd>
+        </dl>
+        </li>
+        <li>
+        <dl>
+        <dt><label for="tel">Tel</label></dt>
+        <dd><input type="text" name="Tel" id="tel" size="60" value="">
+        </dd>
+        </dl>
+        </li>
+        <li>
+        <dl>
+        <dt><label for="msg">Message</label></dt>
+        <dd><textarea name="Message" id="msg" cols="50" rows="5"></textarea>
+        </dd>
+        </dl>
+        </li>
+        </ul>
+
+        <div class="submit-btn"><input type="submit" name="submit" value="Send"></div>
+        </form>
+        <!--/form--></section>
+	<!--/box--></section>
+	</main>
+  
+    
+	<footer id="footer">
+	<small>&copy; Hiroka Amano All Rights Reserved.</small>
+	</footer>
+
+    <!--詳細モータル画面-->
+
+    <div id="detail-13" style="display:none;">
+        <div class="detail-container">
+            <div class="detail-img">
+                <img src="1-6/img/13.jpg" alt="名刺1の詳細画像">
+            </div>
+            <div class="detail-text">
+                <h3>作品名：名刺デザイン01</h3>
+                <p class="detail-meta">制作時間：5時間 / 使用ツール：Illustrator</p>
+                <p>
+                    ここに作品のこだわりポイントや解説文を書きます。<br>
+                    シンプルな配色の中に、視線を誘導する工夫を施しました。<br>
+                    文字のカーニング（間隔）にもこだわり、洗練された印象を与えています。
+                </p>
+                <h4>見どころ</h4>
+                <ul>
+                    <li>・ロゴの配置バランス</li>
+                    <li>・紙の質感を生かした余白</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div id="detail-13" style="display:none;">
+        <div class="detail-container">
+            <div class="detail-img">
+                <img src="1-6/img/13.jpg" alt="名刺1の詳細画像">
+            </div>
+            <div class="detail-text">
+                <h3>作品名：名刺デザイン01</h3>
+                <p class="detail-meta">制作時間：5時間 / 使用ツール：Illustrator</p>
+                <p>
+                    ここに作品のこだわりポイントや解説文を書きます。<br>
+                    シンプルな配色の中に、視線を誘導する工夫を施しました。<br>
+                    文字のカーニング（間隔）にもこだわり、洗練された印象を与えています。
+                </p>
+                <h4>見どころ</h4>
+                <ul>
+                    <li>・ロゴの配置バランス</li>
+                    <li>・紙の質感を生かした余白</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+<!--=============JS ===============--> 
+<!--jQuery-->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<!--機能編 4-1-3プログレスバー＋数字カウントアップ＋画面が開く-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/progressbar.js/1.0.1/progressbar.min.js"></script>
+<!--IE11用　不必要なら削除-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.26.0/polyfill.min.js"></script>
+<!--機能編 6-1-3 ゆっくりズームアウトさせながら全画面で見せる-->    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vegas/2.4.4/vegas.min.js"></script>
+<!--機能編 9-6-3 リンクをクリックすると、背景が暗くなり動画や画像やテキストを表示-->    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Modaal/0.4.4/js/modaal.min.js"></script>
+<!--印象編　6-1　スクロールすると1画面移動-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/scrollify/1.0.21/jquery.scrollify.min.js"></script>
+<!--自作のJS-->    
+<script src="1-6/js/script.js"></script>
+</body>
+
+</html>

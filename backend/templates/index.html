@@ -1,0 +1,249 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{% if site_profile %}{{ site_profile.display_name }} | ポートフォリオサイト{% else %}ポートフォリオサイト{% endif %}{% endblock %}
+
+{% block extra_head %}
+<style>
+.contact-errorlist{color:#c0392b;font-size:0.85rem;margin:4px 0 0;list-style:none;padding:0;}
+.django-messages{max-width:500px;margin:0 auto 20px;}
+.django-messages li{list-style:none;padding:10px 15px;border-radius:4px;margin-bottom:10px;}
+.django-messages li.success{background:#d4edda;color:#155724;}
+.django-messages li.error{background:#f8d7da;color:#721c24;}
+.no-thumbnail{display:flex;align-items:center;justify-content:center;width:100%;aspect-ratio:1/1;background:#ddd;color:#888;font-size:0.8rem;}
+.detail-media{display:flex;flex-direction:column;gap:16px;}
+.detail-media video, .detail-media audio{width:100%;}
+.detail-media iframe{width:100%;aspect-ratio:16/9;border:none;}
+.tags-list{margin-top:20px;}
+.tags-list span{display:inline-block;background:#eee;color:#555;border-radius:12px;padding:3px 12px;margin:0 6px 6px 0;font-size:0.8rem;}
+.gallery-toolbar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;align-items:center;margin:0 auto 20px;max-width:900px;padding:0 10px;}
+.gallery-toolbar input,.gallery-toolbar select{padding:8px 12px;border:1px solid rgba(255,255,255,0.6);border-radius:20px;background:rgba(255,255,255,0.95);color:#333;font-size:0.9rem;outline:none;}
+.gallery-toolbar input{min-width:180px;flex:1 1 180px;}
+.gallery-toolbar select{min-width:130px;cursor:pointer;}
+.gallery-status{margin:0 0 16px;font-size:0.85rem;opacity:0.9;}
+.gallery-results{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;}
+.gallery-results.is-loading{opacity:0.5;pointer-events:none;}
+.gallery-results .detail-open{display:inline-block;max-width:220px;vertical-align:top;}
+.gallery-empty{margin:20px 0;font-size:0.95rem;}
+.gallery-load-more{display:inline-block;margin-top:20px;padding:8px 24px;border:1px solid #fff;border-radius:20px;background:transparent;color:#fff;cursor:pointer;font-size:0.9rem;transition:all 0.3s;}
+.gallery-load-more:hover{background:rgba(255,255,255,0.2);}
+@media screen and (max-width:768px){
+.gallery-toolbar{flex-direction:column;}
+.gallery-toolbar input,.gallery-toolbar select{width:100%;min-width:0;}
+}
+</style>
+{% endblock %}
+
+{% block body %}
+<div id="splash">
+    <div id="splash_text"></div>
+    <div class="loader_cover loader_cover-up"></div>
+    <div class="loader_cover loader_cover-down"></div>
+</div>
+
+<header id="header">
+<div id="slider">
+<div class="heading-block">
+<h1 class="blurTrigger">{% if site_profile %}{{ site_profile.display_name }}{% else %}This is me{% endif %}</h1>
+<p class="blurTrigger">{% if site_profile %}{{ site_profile.role_title }}{% endif %}</p>
+<!--/heading-block--></div>
+{% if site_profile %}
+<ul id="sns-icon">
+{% for link in site_profile.sns_links.all %}
+<li><a href="{{ link.url }}" target="_blank" rel="noopener">
+{% if link.platform == "instagram" %}<img src="{% static '1-6/svg/ico_insta.svg' %}" alt="Instagram">
+{% elif link.platform == "twitter" %}<img src="{% static '1-6/svg/ico_tw.svg' %}" alt="X">
+{% elif link.platform == "facebook" %}<img src="{% static '1-6/svg/ico_fb.svg' %}" alt="Facebook">
+{% else %}{{ link.get_platform_display }}{% endif %}
+</a></li>
+{% endfor %}
+</ul>
+{% endif %}
+<!--/slider--></div>
+</header>
+
+<main>
+    <section id="box1" class="box" data-section-name="Profile">
+        <div class="box-area">
+        <div class="profile-area blurTrigger">
+        {% if site_profile %}
+        <h2>{{ site_profile.role_title }} <span>{{ site_profile.display_name }}</span></h2>
+        <p>
+            {% if site_profile.birth_place %}Birth Place : {{ site_profile.birth_place }}<br>{% endif %}
+            {% if site_profile.birthday %}Birthday : {{ site_profile.birthday|date:"Y.n.j" }}<br>{% endif %}
+            {% if site_profile.school %}School : {{ site_profile.school }}{% endif %}
+        </p>
+        {% if site_profile.bio %}<p>{{ site_profile.bio|linebreaksbr }}</p>{% endif %}
+        {% else %}
+        <h2>プロフィール未設定</h2>
+        <p>管理画面（/admin/）からサイトプロフィールを登録してください。</p>
+        {% endif %}
+        </div>
+        </div>
+    <!--/box--></section>
+
+    {% for genre in genres %}
+    <section id="box{{ forloop.counter|add:1 }}" class="box"
+        data-section-name="{{ genre.name }}"
+        {% if genre.background_image %}style="background:url('{{ genre.background_image.url }}') no-repeat center;background-size:cover;"{% endif %}>
+        <div class="box-area">
+        <h2 class="eachTextAnime">{{ genre.name }}</h2>
+        <a href="#gallery-{{ genre.slug }}" class="gradient4 btn-view blurTrigger">View works</a>
+        <!--/box-area--></div>
+        <div id="gallery-{{ genre.slug }}" class="hide-area gallery-panel" data-default-genre="{{ genre.slug }}">
+            <div class="gallery-toolbar">
+                <input type="search" class="gallery-search-input" placeholder="キーワード検索（タイトル・解説・タグ）" aria-label="作品を検索">
+                <select class="gallery-genre-filter" aria-label="ジャンルで絞り込み">
+                    <option value="">すべてのジャンル</option>
+                    {% for g in genres %}
+                    <option value="{{ g.slug }}"{% if g.slug == genre.slug %} selected{% endif %}>{{ g.name }}</option>
+                    {% endfor %}
+                </select>
+                <select class="gallery-sort" aria-label="並び替え">
+                    <option value="date_desc">新着順</option>
+                    <option value="date_asc">古い順</option>
+                    <option value="title">タイトル順</option>
+                    <option value="featured">おすすめ順</option>
+                </select>
+            </div>
+            <p class="gallery-status">{{ genre.published_works|length }}件</p>
+            <div class="gallery-results">
+            {% if genre.published_works %}
+                {% for work in genre.published_works %}
+                <a href="#detail-{{ work.slug }}" class="detail-open" data-slug="{{ work.slug }}">
+                    {% with thumb=work.primary_media %}
+                    {% if thumb and thumb.file %}
+                    <img src="{{ thumb.file.url }}" alt="{{ work.title }}">
+                    {% else %}
+                    <span class="no-thumbnail">No Image</span>
+                    {% endif %}
+                    {% endwith %}
+                    <span class="caption">{{ work.title }}</span>
+                </a>
+                {% endfor %}
+            {% endif %}
+            </div>
+            <p class="gallery-empty"{% if genre.published_works %} style="display:none;"{% endif %}>該当する作品がありません</p>
+            <button type="button" class="gallery-load-more" style="display:none;">もっと見る</button>
+        </div>
+    <!--/box--></section>
+    {% endfor %}
+
+    <section id="box{{ genres|length|add:2 }}" class="box" data-section-name="Contact" style="background:url('{% static '1-6/img/bg_07.jpg' %}') no-repeat center;background-size:cover;">
+        <div class="box-area">
+        <h2 class="eachTextAnime">contact</h2>
+        <a href="#form" class="gradient4 btn-view2 blurTrigger">Contact Form</a>
+        <!--/box-area--></div>
+        <section id="form" class="hide-area">
+            <h3>Contact Form</h3>
+
+            {% if messages %}
+            <ul class="django-messages">
+                {% for message in messages %}
+                <li class="{{ message.tags }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+
+            <form method="post" action="{% url 'contact:submit' %}">
+            {% csrf_token %}
+            <ul class="form-list">
+            <li>
+            <dl>
+            <dt><label for="name">Name</label></dt>
+            <dd>{{ contact_form.name }}
+            {% if contact_form.name.errors %}<ul class="contact-errorlist">{{ contact_form.name.errors }}</ul>{% endif %}
+            </dd>
+            </dl>
+            </li>
+            <li>
+            <dl>
+            <dt><label for="email">E-mail</label></dt>
+            <dd>{{ contact_form.email }}
+            {% if contact_form.email.errors %}<ul class="contact-errorlist">{{ contact_form.email.errors }}</ul>{% endif %}
+            </dd>
+            </dl>
+            </li>
+            <li>
+            <dl>
+            <dt><label for="tel">Tel</label></dt>
+            <dd>{{ contact_form.tel }}</dd>
+            </dl>
+            </li>
+            <li>
+            <dl>
+            <dt><label for="msg">Message</label></dt>
+            <dd>{{ contact_form.message }}
+            {% if contact_form.message.errors %}<ul class="contact-errorlist">{{ contact_form.message.errors }}</ul>{% endif %}
+            </dd>
+            </dl>
+            </li>
+            </ul>
+
+            <div class="submit-btn"><input type="submit" name="submit" value="Send"></div>
+            </form>
+        <!--/form--></section>
+    <!--/box--></section>
+</main>
+
+<footer id="footer">
+<small>&copy; {% if site_profile %}{{ site_profile.display_name }}{% else %}This is me{% endif %} All Rights Reserved.</small>
+</footer>
+
+<!--詳細モーダル画面（作品ごとに複数メディアを表示）-->
+{% for genre in genres %}
+{% for work in genre.published_works %}
+<div id="detail-{{ work.slug }}" style="display:none;">
+    <div class="detail-container">
+        <div class="detail-media">
+            {% for media in work.media.all %}
+                {% if media.media_type == "image" and media.file %}
+                <img src="{{ media.file.url }}" alt="{{ media.caption|default:work.title }}">
+                {% elif media.media_type == "video" and media.file %}
+                <video controls src="{{ media.file.url }}"></video>
+                {% elif media.media_type == "audio" and media.file %}
+                <audio controls src="{{ media.file.url }}"></audio>
+                {% elif media.media_type == "embed" and media.external_url %}
+                <iframe src="{{ media.external_url }}" allowfullscreen></iframe>
+                {% elif media.media_type == "document" and media.file %}
+                <a href="{{ media.file.url }}" target="_blank" rel="noopener">{{ media.caption|default:"資料を見る" }}</a>
+                {% endif %}
+                {% if media.caption %}<span class="caption">{{ media.caption }}</span>{% endif %}
+            {% empty %}
+                <span class="no-thumbnail">No Media</span>
+            {% endfor %}
+        </div>
+        <div class="detail-text">
+            <h3>作品名：{{ work.title }}</h3>
+            <p class="detail-meta">
+                {% if work.created_date %}制作日：{{ work.created_date|date:"Y.n.j" }}{% endif %}
+                {% if work.production_hours %} / 制作時間：{{ work.production_hours }}時間{% endif %}
+                {% if work.tools.exists %} / 使用ツール：{% for tool in work.tools.all %}{{ tool.name }}{% if not forloop.last %}, {% endif %}{% endfor %}{% endif %}
+            </p>
+            {% if work.description %}<p>{{ work.description|linebreaksbr }}</p>{% endif %}
+            {% if work.highlights_list %}
+            <h4>見どころ</h4>
+            <ul>
+                {% for item in work.highlights_list %}<li>・{{ item }}</li>{% endfor %}
+            </ul>
+            {% endif %}
+            {% if work.tags.exists %}
+            <div class="tags-list">
+                {% for tag in work.tags.all %}<span>#{{ tag.name }}</span>{% endfor %}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% endfor %}
+{% endblock %}
+
+{% block extra_js %}
+<script>
+window.HERO_SLIDES = {
+    pc: [{% for slide in hero_slides %}{% if slide.image_pc %}"{{ slide.image_pc.url }}"{% if not forloop.last %},{% endif %}{% endif %}{% endfor %}],
+    sp: [{% for slide in hero_slides %}{% if slide.image_sp %}"{{ slide.image_sp.url }}"{% if not forloop.last %},{% endif %}{% endif %}{% endfor %}]
+};
+</script>
+{% endblock %}
