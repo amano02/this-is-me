@@ -1,0 +1,28 @@
+# Git / 開発環境
+.git
+.github
+.vscode
+**/.DS_Store
+
+# 重複する旧静的ファイル（backend/static に統合済み）
+1-6
+
+# ローカル開発専用
+backend/venv
+backend/pgdata
+backend/pgdata_logfile.log
+backend/.env
+backend/db.sqlite3
+
+# ビルド時に生成（ローカルキャッシュは除外）
+backend/staticfiles
+# backend/media は build.sh で生成して Vercel に同梱
+# backend/db.sqlite3 も build.sh で生成
+
+# GitHub Pages 用（Vercel では不要）
+index.html
+.nojekyll
+
+# ドキュメント
+DEPLOY.md
+README.md
