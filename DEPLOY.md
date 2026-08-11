@@ -1,95 +1,61 @@
-# デプロイ手順（Vercel + GitHub Pages）
+# デプロイについて（重要）
 
-## 概要
+## 結論
 
-| 環境 | 役割 |
-|---|---|
-| **Vercel** | Django アプリ本体（DB・API・管理画面） |
-| **GitHub Pages** | `https://amano02.github.io/this-is-me/` から Vercel へリダイレクト |
-
-GitHub Pages では Python/Django を実行できないため、フル機能版は Vercel でホスティングします。
+| 環境 | Django版を動かせるか | 状態 |
+|---|---|---|
+| **GitHub Pages** | ❌ **不可** | 静的HTMLのみ。Python/DBは実行できない |
+| **Vercel** | ❌ **現構成では不可** | Serverless向きではなく500エラー（後述） |
 
 ---
 
-## 1. Neon で PostgreSQL を作成（無料）
+## GitHub Pages について
 
-1. https://neon.tech にサインアップ
-2. 新規プロジェクト作成
-3. **Connection string** をコピー（`postgres://...?sslmode=require` 形式）
+GitHub Pages は **静的ファイル（HTML/CSS/JS/画像）しか配信できません**。
 
----
+- ✅ 可能: 旧来の静的ポートフォリオ（`index.html` + `1-6/` フォルダ）
+- ❌ 不可能: Django、PostgreSQL、検索API、管理画面、お問い合わせDB保存
 
-## 2. Vercel にデプロイ
-
-### 方法 A: Vercel ダッシュボード（推奨・初回）
-
-1. https://vercel.com に GitHub アカウントでログイン
-2. **Add New Project** → `amano02/this-is-me` を Import
-3. 設定:
-   - **Framework Preset**: Other
-   - **Root Directory**: （空欄 = リポジトリルート）
-   - **Build Command**: `cd backend && bash build.sh`
-   - **Install Command**: `cd backend && pip install -r requirements.txt`
-4. **Environment Variables** を追加:
-
-| 変数名 | 値 |
-|---|---|
-| `DATABASE_URL` | Neon の接続文字列 |
-| `DJANGO_SECRET_KEY` | ランダムな長い文字列 |
-| `DJANGO_DEBUG` | `False` |
-| `DJANGO_PRODUCTION` | `True` |
-| `DJANGO_ALLOWED_HOSTS` | `.vercel.app,this-is-me.vercel.app,amano02.github.io` |
-
-5. **Deploy** をクリック
-
-### 方法 B: GitHub Actions（2回目以降の自動デプロイ）
-
-1. Vercel ダッシュボード → Project Settings → General から `VERCEL_ORG_ID` / `VERCEL_PROJECT_ID` を取得
-2. https://vercel.com/account/tokens で Token 作成
-3. GitHub リポジトリ → Settings → Secrets → Actions に追加:
-   - `VERCEL_TOKEN`
-   - `VERCEL_ORG_ID`
-   - `VERCEL_PROJECT_ID`
-4. `main` へ push すると自動デプロイ
+**現在**: ルートの `index.html`（静的版）が GitHub Pages で表示されます。  
+URL: https://amano02.github.io/this-is-me/
 
 ---
 
-## 3. 初回デプロイ後
+## Vercel について
 
-1. Vercel の URL（例: `https://this-is-me-xxx.vercel.app`）を確認
-2. 管理画面: `https://your-url.vercel.app/admin/`
-3. スーパーユーザー作成（Vercel CLI または Neon SQL コンソール経由で不可のため、ローカルから migrate 後に createsuperuser、または build.sh の seed データを利用）
+Django + データベース + 大量の画像メディアという構成は **Vercel の Serverless Python 向きではありません**。
 
-ローカルから本番 DB に接続してスーパーユーザー作成:
+試みた結果、以下の制約で安定稼働できませんでした:
+
+- Lambda サイズ上限（225MB）と画像アセットの兼ね合い
+- 読み取り専用ファイルシステム（SQLite書き込み・メディアアップロード不可）
+- Django WSGI の非公式サポート
+- ビルド時の PostgreSQL 接続が必須
+
+**→ Vercel ではこの Django アプリを本番運用することは現実的ではありません。**
+
+---
+
+## 推奨する代替（Django 版を公開したい場合）
+
+| サービス | 適合度 | 無料枠 |
+|---|---|---|
+| **[Render](https://render.com)** | ◎ Django + PostgreSQL 向き | あり |
+| **[Railway](https://railway.app)** | ◎ 同上 | あり（制限付き） |
+| **[Fly.io](https://fly.io)** | ○ Docker で Django 可 | あり |
+
+Render なら `backend/` を Web Service としてデプロイし、PostgreSQL アドオンを追加するだけで Phase 1〜3 の機能がそのまま動きます。
+
+---
+
+## ローカルでの利用
 
 ```bash
 cd backend
-export DATABASE_URL="postgres://..."
 source venv/bin/activate
-pip install -r requirements.txt
-python manage.py migrate
-python manage.py seed_initial_data
-python manage.py createsuperuser
+# PostgreSQL 起動後
+python manage.py runserver
+# → http://127.0.0.1:8000/
 ```
 
----
-
-## 4. GitHub Pages
-
-`main` ブランチのルート `index.html` が自動的に GitHub Pages で公開されます（リダイレクトページ）。
-
-- URL: https://amano02.github.io/this-is-me/
-- 設定: リポジトリ → Settings → Pages → Source: **Deploy from branch** → Branch: **main** / **/ (root)**
-
-Vercel の確定 URL が分かったら、ルート `index.html` のリダイレクト先 URL を更新してください。
-
----
-
-## トラブルシューティング
-
-| 症状 | 対処 |
-|---|---|
-| 500 Error | Vercel Logs で `DATABASE_URL` 未設定を確認 |
-| 静的ファイルが表示されない | `collectstatic` が build.sh で実行されているか確認 |
-| 画像が表示されない | build 時に `seed_initial_data` が実行されているか確認 |
-| CSRF エラー（お問い合わせ） | `CSRF_TRUSTED_ORIGINS` に Vercel URL を追加 |
+管理画面: http://127.0.0.1:8000/admin/
